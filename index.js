@@ -9,7 +9,9 @@ const connection = new solana.Connection(rpcUrl)
 const provider = new serum.Provider(connection)
 
 const mangoMint = new solana.PublicKey('MangoCzJ36AjZyKwVj3VnYU4GTonjfVEnJmvvWaxLac')
-const treasuryTokens = new solana.PublicKey('Guiwem4qBivtkSFrxZAEfuthBz6YuWyCwS4G3fjBYu5Z')
+const treasuryTokens1 = new solana.PublicKey('Guiwem4qBivtkSFrxZAEfuthBz6YuWyCwS4G3fjBYu5Z')
+const treasuryTokens2 = new solana.PublicKey('4apXu6Vg5Wx9vxrfZoXN8svCGgb45sho2FTEbjqytFbZ')
+const treasuryTokens3 = new solana.PublicKey('3LtPNF23wLdSsrG9VMYRmXBfgfvtvywzsNtafC4T7sbn')
 
 app.get('/total', async function (req, res) {
   const mintInfo = await serum.getMintInfo(provider, mangoMint)
@@ -20,8 +22,10 @@ app.get('/total', async function (req, res) {
 app.get('/circulating', async function (req, res) {
   const mintInfo = await serum.getMintInfo(provider, mangoMint)
   const totalSupply = parseInt(mintInfo.supply.toString()) / Math.pow(10, mintInfo.decimals)
-  const treasuryInfo = await serum.getTokenAccount(provider, treasuryTokens)
-  const lockedSupply = parseInt(treasuryInfo.amount.toString()) / Math.pow(10, mintInfo.decimals)
+  const treasuryInfo1 = await serum.getTokenAccount(provider, treasuryTokens)
+  const treasuryInfo2 = await serum.getTokenAccount(provider, treasuryTokens2)
+  const treasuryInfo3 = await serum.getTokenAccount(provider, treasuryTokens3)
+  const lockedSupply = (parseInt(treasuryInfo1.amount.toString()) + parseInt(treasuryInfo2.amount.toString()) + parseInt(treasuryInfo3.amount.toString()) / Math.pow(10, mintInfo.decimals)
   const circulatingSupply = totalSupply - lockedSupply
   res.send(circulatingSupply.toString())
 })
