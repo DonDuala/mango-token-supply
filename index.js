@@ -25,7 +25,7 @@ app.get('/circulating', async function (req, res) {
   const treasuryInfo1 = await serum.getTokenAccount(provider, treasuryTokens1)
   const treasuryInfo2 = await serum.getTokenAccount(provider, treasuryTokens2)
   const treasuryInfo3 = await serum.getTokenAccount(provider, treasuryTokens3)
-  const lockedSupply = (parseInt(treasuryInfo1.amount.toString()) + parseInt(treasuryInfo2.amount.toString()) + parseInt(treasuryInfo3.amount.toString()) / Math.pow(10, mintInfo.decimals)
+  const lockedSupply = (parseInt(treasuryInfo1.amount.toString()) + parseInt(treasuryInfo2.amount.toString()) + parseInt(treasuryInfo3.amount.toString())) / Math.pow(10, mintInfo.decimals)
   const circulatingSupply = totalSupply - lockedSupply
   res.send(circulatingSupply.toString())
 })
